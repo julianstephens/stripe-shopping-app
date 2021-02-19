@@ -12,12 +12,19 @@ import (
 	"github.com/stripe/stripe-go/v72/checkout/session"
 )
 
-func main() {
+func getDotEnvVariable(key string) string {
 	err := godotenv.Load()
+
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatalf("Error loading .env file")
 	}
-	stripe.Key = os.Getenv("STRIPE_SECRECT_KEY")
+
+	return os.Getenv(key)
+}
+
+func main() {
+	// Load stripe key
+	stripe.Key = getDotEnvVariable("STRIPE_SECRET_KEY")
 
 	e := echo.New()
 
@@ -39,9 +46,8 @@ type createSessionResponse struct {
 }
 
 func createSession(c echo.Context) error {
+	// domain := "http://localhost:8000"
 	params := &stripe.CheckoutSessionParams{
-		SuccessURL: stripe.String("/checkout/success"),
-		CancelURL:  stripe.String("/checkout/cancel"),
 		PaymentMethodTypes: stripe.StringSlice([]string{
 			"card",
 		}),
@@ -57,7 +63,9 @@ func createSession(c echo.Context) error {
 				Quantity: stripe.Int64(1),
 			},
 		},
-		Mode: stripe.String(string(stripe.CheckoutSessionModePayment)),
+		Mode:       stripe.String(string(stripe.CheckoutSessionModePayment)),
+		SuccessURL: stripe.String("/checkout/success"),
+		CancelURL:  stripe.String("/checkout/cancel"),
 	}
 
 	session, err := session.New(params)
