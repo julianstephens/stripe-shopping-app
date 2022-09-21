@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/julianstephens/stripe-shopping-app-tutorial/server/router"
-	"github.com/julianstephens/stripe-shopping-app-tutorial/server/utils"
+	"github.com/julianstephens/stripe-shopping-app/server/router"
+	"github.com/julianstephens/stripe-shopping-app/server/utils"
 )
 
 func main() {

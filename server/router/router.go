@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/julianstephens/stripe-shopping-app-tutorial/server/utils"
+	"github.com/julianstephens/stripe-shopping-app/server/utils"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
